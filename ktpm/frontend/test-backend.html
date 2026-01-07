@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Backend - BlueMoon</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        h1 { color: #4fc3f7; }
+        .section {
+            background: #252526;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4fc3f7;
+        }
+        button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background: #1177bb; }
+        pre {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 3px;
+            overflow-x: auto;
+            border: 1px solid #3c3c3c;
+        }
+        .success { color: #4ec9b0; }
+        .error { color: #f48771; }
+        .info { color: #dcdcaa; }
+        input {
+            background: #3c3c3c;
+            border: 1px solid #555;
+            color: #d4d4d4;
+            padding: 8px;
+            border-radius: 3px;
+            width: 300px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Backend Test Tool - BlueMoon</h1>
+    
+    <div class="section">
+        <h2>1. Test Login</h2>
+        <input type="text" id="username" placeholder="Username (BM-A1201)" value="BM-A1201">
+        <input type="password" id="password" placeholder="Password (BM-A1201)" value="BM-A1201">
+        <button onclick="testLogin()">🔑 Login</button>
+        <pre id="loginResult"></pre>
+    </div>
+
+    <div class="section">
+        <h2>2. Check Token</h2>
+        <button onclick="checkToken()">🎫 Check Current Token</button>
+        <button onclick="clearToken()">🗑️ Clear Token</button>
+        <pre id="tokenResult"></pre>
+    </div>
+
+    <div class="section">
+        <h2>3. Test /resident/me</h2>
+        <button onclick="testResidentMe()">👤 Get Resident Info</button>
+        <pre id="residentResult"></pre>
+    </div>
+
+    <div class="section">
+        <h2>4. Backend Logs</h2>
+        <p class="info">Open backend terminal to see detailed logs</p>
+        <button onclick="window.open('http://localhost:3000/swagger', '_blank')">📚 Open API Docs</button>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000';
+        
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            const timestamp = new Date().toLocaleTimeString();
+            element.innerHTML = `<span class="${className}">[${timestamp}] ${message}</span>`;
+        }
+
+        async function testLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            log('loginResult', 'Sending login request...');
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    localStorage.setItem('token', data.data.token);
+                    localStorage.setItem('user', JSON.stringify(data.data.user));
+                    
+                    // Decode token to show payload
+                    const payload = JSON.parse(atob(data.data.token.split('.')[1]));
+                    
+                    log('loginResult', JSON.stringify({
+                        success: true,
+                        user: data.data.user,
+                        tokenPayload: payload,
+                        token: data.data.token.substring(0, 50) + '...'
+                    }, null, 2), 'success');
+                } else {
+                    log('loginResult', JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                log('loginResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        function checkToken() {
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                log('tokenResult', 'No token found in localStorage', 'error');
+                return;
+            }
+            
+            try {
+                const parts = token.split('.');
+                const payload = JSON.parse(atob(parts[1]));
+                
+                log('tokenResult', JSON.stringify({
+                    payload: payload,
+                    hasId: !!payload.id,
+                    hasUserId: !!payload.userId,
+                    hasRole: !!payload.role,
+                    format: payload.id ? 'NEW (correct)' : payload.userId ? 'OLD (needs update)' : 'UNKNOWN'
+                }, null, 2), payload.id ? 'success' : 'error');
+            } catch (error) {
+                log('tokenResult', `Error parsing token: ${error.message}`, 'error');
+            }
+        }
+
+        function clearToken() {
+            localStorage.clear();
+            log('tokenResult', 'All localStorage cleared!', 'success');
+        }
+
+        async function testResidentMe() {
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                log('residentResult', 'No token! Please login first.', 'error');
+                return;
+            }
+            
+            log('residentResult', 'Fetching /resident/me...');
+            
+            try {
+                const response = await fetch(`${API_URL}/resident/me`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.status === 'success') {
+                    log('residentResult', JSON.stringify({
+                        success: true,
+                        apartmentCode: data.data.info?.soCanHo,
+                        unpaidFees: data.data.chuaNop?.length || 0,
+                        paymentHistory: data.data.lichSu?.length || 0,
+                        totalDebt: data.data.tongNo
+                    }, null, 2), 'success');
+                } else {
+                    log('residentResult', JSON.stringify({
+                        error: true,
+                        status: response.status,
+                        data: data
+                    }, null, 2), 'error');
+                }
+            } catch (error) {
+                log('residentResult', `Network Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto check token on load
+        window.onload = function() {
+            checkToken();
+        };
+    </script>
+</body>
+</html>

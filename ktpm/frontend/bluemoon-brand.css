@@ -1,0 +1,110 @@
+/* BlueMoon Brand Colors - Clean Version */
+
+/* BlueMoon Color Variables */
+:root {
+    --bluemoon-500: #0ea5e9;
+    --bluemoon-600: #0284c7;
+    --bluemoon-700: #0369a1;
+}
+
+/* Primary BlueMoon Colors */
+.bg-bluemoon-600 {
+    background-color: var(--bluemoon-600);
+}
+
+.bg-bluemoon-500 {
+    background-color: var(--bluemoon-500);
+}
+
+.bg-bluemoon-700 {
+    background-color: var(--bluemoon-700);
+}
+
+.text-bluemoon-600 {
+    color: var(--bluemoon-600);
+}
+
+.text-bluemoon-500 {
+    color: var(--bluemoon-500);
+}
+
+.hover\:bg-bluemoon-700:hover {
+    background-color: var(--bluemoon-700);
+}
+
+/* Focus states */
+.focus\:ring-bluemoon-500:focus {
+    --tw-ring-color: rgba(14, 165, 233, 0.5);
+}
+
+.focus\:border-bluemoon-500:focus {
+    border-color: var(--bluemoon-500);
+}
+
+/* Notification system với BlueMoon branding */
+#notification-container .notification-success {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    border-color: #059669 !important;
+}
+
+#notification-container .notification-payment {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3) !important;
+}
+
+#notification-container .notification-error {
+    background: linear-gradient(135deg, #EF4444, #DC2626) !important;
+    border-color: #DC2626 !important;
+}
+
+#notification-container .notification-warning {
+    background: linear-gradient(135deg, #F59E0B, #D97706) !important;
+    border-color: #D97706 !important;
+}
+
+#notification-container .notification-info {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+    border-color: #0284c7 !important;
+}
+
+/* Focus states với BlueMoon colors */
+.focus\:ring-bluemoon-500:focus {
+    --tw-ring-color: rgba(14, 165, 233, 0.5) !important;
+}
+
+.focus\:border-bluemoon-500:focus {
+    border-color: #0ea5e9 !important;
+}
+
+/* Hover states */
+.hover\:bg-bluemoon-700:hover {
+    background-color: #0369a1 !important;
+}
+
+/* Đảm bảo buttons có màu đồng bộ */
+.btn-bluemoon {
+    background-color: #0284c7 !important;
+    color: white !important;
+    border: 1px solid #0284c7 !important;
+}
+
+.btn-bluemoon:hover {
+    background-color: #0369a1 !important;
+    border-color: #0369a1 !important;
+}
+
+/* Override cho các modal buttons cũ nếu còn */
+.bg-blue-500, .bg-blue-600 {
+    background-color: #0284c7 !important;
+}
+
+.text-blue-500, .text-blue-600 {
+    color: #0284c7 !important;
+}
+
+/* Đảm bảo logo và branding đồng bộ */
+.brand-text {
+    color: #0284c7 !important;
+    font-weight: 600 !important;
+}

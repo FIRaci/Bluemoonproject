@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Token - BlueMoon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0066cc;
+            text-align: center;
+        }
+        .btn {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .btn:hover {
+            background: #0052a3;
+        }
+        .success {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+        .info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔧 Sửa Lỗi Token</h1>
+        
+        <div class="info">
+            <strong>⚠️ Lỗi gặp phải:</strong>
+            <ul>
+                <li>Không load được thông tin cư dân</li>
+                <li>Không load được danh sách nộp tiền</li>
+                <li>Không đổi được mật khẩu</li>
+            </ul>
+            <strong>Nguyên nhân:</strong> Token cũ không tương thích với phiên bản mới
+        </div>
+
+        <button class="btn" onclick="clearToken()">🗑️ Xóa Token Cũ và Đăng Xuất</button>
+        
+        <button class="btn" onclick="goToLogin()">🔐 Đi đến Trang Đăng Nhập</button>
+
+        <div class="success" id="successMsg">
+            ✅ Đã xóa token cũ thành công! Bạn sẽ được chuyển đến trang đăng nhập...
+        </div>
+    </div>
+
+    <script>
+        function clearToken() {
+            // Clear all auth data
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+            
+            // Show success message
+            document.getElementById('successMsg').style.display = 'block';
+            
+            // Redirect to login after 2 seconds
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 2000);
+        }
+
+        function goToLogin() {
+            clearToken();
+        }
+
+        // Check if already logged in with new token
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    // Decode JWT to check format
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    if (payload.id && payload.role) {
+                        alert('Token của bạn đã đúng format! Không cần sửa.');
+                    } else if (payload.userId) {
+                        alert('Token cũ phát hiện! Vui lòng click "Xóa Token Cũ"');
+                    }
+                } catch (e) {
+                    console.log('Cannot parse token');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

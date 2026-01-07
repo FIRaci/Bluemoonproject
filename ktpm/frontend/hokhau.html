@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMoon - Quản lý Hộ khẩu</title>
+    <link href="./dist/output.css" rel="stylesheet">
+    <link href="bluemoon-brand.css" rel="stylesheet">
+    <script src="preload.js"></script>
+    <script src="./components/notification-v3.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans h-screen flex overflow-hidden">
+    <!-- Sidebar Đồng bộ -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col shadow-sm z-10">
+        <!-- Logo Area -->
+        <div class="h-16 flex items-center justify-center border-b border-gray-200 bg-bluemoon-600">
+            <h1 class="text-xl font-bold text-white flex items-center">
+                <img src="./assets/logo.svg" class="h-8 w-8 mr-2" alt="BlueMoon Logo">
+                BlueMoon
+            </h1>
+        </div>
+
+        <!-- Menu -->
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3">
+                <li><a href="dashboard.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                    Tổng quan
+                </a></li>
+                <li><a href="#" class="flex items-center px-3 py-2.5 bg-bluemoon-50 text-bluemoon-600 rounded-lg group font-medium">
+                    <svg class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                    Quản lý Hộ khẩu
+                </a></li>
+                <li><a href="nhankhau.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    Quản lý Nhân khẩu
+                </a></li>
+                <li><a href="khoanthu.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Quản lý Thu phí
+                </a></li>
+                <li><a href="thongke.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    Thống kê
+                </a></li>
+
+                <!-- Police Access Button -->
+                <li>
+                    <a href="#" id="policeAccessBtn" class="flex items-center px-3 py-2.5 text-red-700 hover:bg-red-50 rounded-lg group transition-colors border-2 border-red-200">
+                        <svg class="h-5 w-5 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <span class="font-bold">Truy cập Công an</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- User Info & Logout -->
+        <div class="border-t border-gray-200 p-4">
+            <div class="flex items-center">
+                <div class="bg-bluemoon-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-semibold text-sm" id="userAvatar">A</div>
+                <div class="ml-3 flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900" id="displayUsername">Admin</p>
+                    <p class="text-xs text-gray-500">Ban quản trị</p>
+                </div>
+            </div>
+            <button id="btnLogout" class="mt-3 w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Đăng xuất
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800">Quản lý Hộ khẩu</h2>
+                <p class="text-gray-500">Quản lý thông tin các hộ gia đình trong chung cư</p>
+            </div>
+            <button id="btnOpenAddModal" class="bg-bluemoon-600 hover:bg-bluemoon-700 text-white px-4 py-2 rounded-lg font-medium shadow-sm transition-colors flex items-center">
+                <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Thêm Hộ Khẩu
+            </button>
+        </header>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-6">
+
+            <!-- Thanh tìm kiếm -->
+            <div class="mb-4">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm theo số căn hộ, tên chủ hộ, SĐT..." class="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bluemoon-500 focus:border-bluemoon-500">
+                    <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Số Căn Hộ</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chủ Hộ</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SĐT</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Diện Tích</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hạng</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Số thành viên</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="hoKhauTableBody">
+                        <tr>
+                            <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                <div class="py-8">
+                                    <svg class="animate-spin mx-auto h-8 w-8 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <p class="text-lg font-medium">Đang tải dữ liệu...</p>
+                                    <p class="text-sm text-gray-400 mt-2">Vui lòng chờ trong giây lát</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Thêm Hộ Khẩu -->
+    <div id="addModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        <div class="relative mx-auto p-6 border max-w-4xl w-full mx-4 shadow-lg rounded-xl bg-white max-h-[90vh] overflow-y-auto">
+            <div class="mt-3">
+                <h3 class="text-xl leading-6 font-bold text-gray-900 mb-6 text-center">Thêm Hộ Khẩu Mới</h3>
+                <form id="addHoKhauForm" class="space-y-6">
+                    <!-- Thông tin căn hộ -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-800 mb-4">Thông tin căn hộ</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mã căn hộ <span class="text-red-500">*</span> <span class="text-xs text-gray-500">(Tự động tạo)</span></label>
+                                <div class="flex gap-2">
+                                    <div class="flex items-center">
+                                        <span class="bg-gray-100 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 text-sm font-mono font-semibold text-gray-600">BM-</span>
+                                        <select id="addToa" required class="border-gray-300 border-l-0 py-2 px-2 focus:ring-bluemoon-500 focus:border-bluemoon-500 border text-sm">
+                                            <option value="">Tòa</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                            <option value="F">F</option>
+                                            <option value="G">G</option>
+                                            <option value="H">H</option>
+                                            <option value="I">I</option>
+                                            <option value="J">J</option>
+                                            <option value="K">K</option>
+                                            <option value="L">L</option>
+                                            <option value="M">M</option>
+                                            <option value="N">N</option>
+                                            <option value="O">O</option>
+                                            <option value="P">P</option>
+                                            <option value="Q">Q</option>
+                                            <option value="R">R</option>
+                                            <option value="S">S</option>
+                                            <option value="T">T</option>
+                                            <option value="U">U</option>
+                                            <option value="V">V</option>
+                                            <option value="W">W</option>
+                                            <option value="X">X</option>
+                                            <option value="Y">Y</option>
+                                            <option value="Z">Z</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" id="addTang" required maxlength="2" pattern="[0-9]{2}" 
+                                        class="w-20 border-gray-300 rounded-lg py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 border text-center font-mono text-sm" 
+                                        placeholder="02">
+                                    <input type="text" id="addPhong" required maxlength="2" pattern="[0-9]{2}" 
+                                        class="w-20 border-gray-300 rounded-lg py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 border text-center font-mono text-sm" 
+                                        placeholder="45">
+                                </div>
+                                <input type="hidden" name="soCanHo" id="hiddenAddSoCanHo">
+                                <p class="text-xs text-gray-500 mt-1">Tầng và Phòng phải là 2 chữ số (VD: Tầng 2 = 02, Phòng 5 = 05)</p>
+                                <div id="previewAddMaCanHo" class="text-sm font-mono font-bold text-bluemoon-600 mt-2"></div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Diện tích (m²)</label>
+                                <input type="number" name="dienTich" step="0.1" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm" placeholder="120">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Hạng căn hộ <span class="text-red-500">*</span></label>
+                                <select name="hangCanHo" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                    <option value="BINH_THUONG">Bình thường</option>
+                                    <option value="TRUNG_CAP">Trung cấp</option>
+                                    <option value="CAO_CAP">Cao cấp</option>
+                                    <option value="PENTHOUSE">Penthouse</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin chủ hộ -->
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-800 mb-4">Thông tin chủ hộ</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tên chủ hộ <span class="text-red-500">*</span></label>
+                                <input type="text" name="tenChuHo" required minlength="2" maxlength="100" title="Tên chủ hộ phải từ 2 ký tự trở lên" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm" placeholder="Nguyễn Văn A">
+                                <small class="text-gray-500">Từ 2-100 ký tự (VD: Nguyễn Văn A)</small>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">CCCD/CMND <span class="text-red-500">*</span></label>
+                                <input type="text" name="cccd" required minlength="9" maxlength="12" pattern="[0-9]{9,12}" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm" placeholder="079201234567" title="Chỉ nhập số, từ 9-12 chữ số">
+                                <p class="text-xs text-gray-500 mt-1">Chỉ số, từ 9-12 chữ số (VD: 079201234567)</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Giới tính <span class="text-red-500">*</span></label>
+                                <select name="gioiTinh" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh <span class="text-red-500">*</span></label>
+                                <input type="date" name="ngaySinh" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm" placeholder="example@email.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                                <input type="text" name="soDienThoai" minlength="10" maxlength="11" pattern="[0-9]{10,11}" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm" placeholder="0901234567" title="Chỉ nhập số, từ 10-11 chữ số">
+                                <p class="text-xs text-gray-500 mt-1">Chỉ số, từ 10-11 chữ số (VD: 0901234567)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end mt-6 gap-3">
+                        <button type="button" id="btnCloseAddModal" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">Hủy</button>
+                        <button type="submit" class="px-4 py-2 bg-bluemoon-600 text-white rounded-lg hover:bg-bluemoon-700 font-medium shadow-sm">Lưu thông tin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Sửa Hộ Khẩu -->
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        <div class="relative mx-auto p-6 border max-w-4xl w-full mx-4 shadow-lg rounded-xl bg-white max-h-[90vh] overflow-y-auto">
+            <div class="mt-3">
+                <h3 class="text-xl leading-6 font-bold text-gray-900 mb-6 text-center">Chỉnh Sửa Hộ Khẩu</h3>
+                <form id="editHoKhauForm" class="space-y-6">
+                    <input type="hidden" id="editHoKhauId">
+                    
+                    <!-- Thông tin căn hộ -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-800 mb-4">Thông tin căn hộ</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Mã căn hộ <span class="text-red-500">*</span> <span class="text-xs text-gray-500">(Tự động tạo)</span></label>
+                                <div class="flex gap-2">
+                                    <div class="flex items-center">
+                                        <span class="bg-gray-100 px-3 py-2 rounded-l-lg border border-r-0 border-gray-300 text-sm font-mono font-semibold text-gray-600">BM-</span>
+                                        <select id="editToa" required class="border-gray-300 border-l-0 py-2 px-2 focus:ring-bluemoon-500 focus:border-bluemoon-500 border text-sm">
+                                            <option value="">Tòa</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                            <option value="F">F</option>
+                                            <option value="G">G</option>
+                                            <option value="H">H</option>
+                                            <option value="I">I</option>
+                                            <option value="J">J</option>
+                                            <option value="K">K</option>
+                                            <option value="L">L</option>
+                                            <option value="M">M</option>
+                                            <option value="N">N</option>
+                                            <option value="O">O</option>
+                                            <option value="P">P</option>
+                                            <option value="Q">Q</option>
+                                            <option value="R">R</option>
+                                            <option value="S">S</option>
+                                            <option value="T">T</option>
+                                            <option value="U">U</option>
+                                            <option value="V">V</option>
+                                            <option value="W">W</option>
+                                            <option value="X">X</option>
+                                            <option value="Y">Y</option>
+                                            <option value="Z">Z</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" id="editTang" required maxlength="2" pattern="[0-9]{2}" 
+                                        class="w-20 border-gray-300 rounded-lg py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 border text-center font-mono text-sm" 
+                                        placeholder="02">
+                                    <input type="text" id="editPhong" required maxlength="2" pattern="[0-9]{2}" 
+                                        class="w-20 border-gray-300 rounded-lg py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 border text-center font-mono text-sm" 
+                                        placeholder="45">
+                                </div>
+                                <input type="hidden" name="soCanHo" id="hiddenEditSoCanHo">
+                                <p class="text-xs text-gray-500 mt-1">Tầng và Phòng phải là 2 chữ số (VD: Tầng 2 = 02, Phòng 5 = 05)</p>
+                                <div id="previewEditMaCanHo" class="text-sm font-mono font-bold text-bluemoon-600 mt-2"></div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Diện tích (m²)</label>
+                                <input type="number" id="editDienTich" name="dienTich" step="0.1" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Hạng căn hộ <span class="text-red-500">*</span></label>
+                                <select id="editHangCanHo" name="hangCanHo" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                    <option value="BINH_THUONG">Bình thường</option>
+                                    <option value="TRUNG_CAP">Trung cấp</option>
+                                    <option value="CAO_CAP">Cao cấp</option>
+                                    <option value="PENTHOUSE">Penthouse</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin chủ hộ -->
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-800 mb-4">Thông tin chủ hộ</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tên chủ hộ <span class="text-red-500">*</span></label>
+                                <input type="text" id="editTenChuHo" name="tenChuHo" required minlength="2" maxlength="100" title="Tên chủ hộ phải từ 2 ký tự trở lên" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                <small class="text-gray-500">Từ 2-100 ký tự (VD: Nguyễn Văn A)</small>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">CCCD/CMND <span class="text-red-500">*</span></label>
+                                <input type="text" id="editCccd" name="cccd" required minlength="9" maxlength="12" pattern="[0-9]{9,12}" placeholder="079201234567" title="Chỉ nhập số, từ 9-12 chữ số" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                <small class="text-gray-500">Chỉ số, từ 9-12 chữ số (VD: 079201234567)</small>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Giới tính <span class="text-red-500">*</span></label>
+                                <select id="editGioiTinh" name="gioiTinh" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh <span class="text-red-500">*</span></label>
+                                <input type="date" id="editNgaySinh" name="ngaySinh" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email <span class="text-red-500">*</span></label>
+                                <input type="email" id="editEmail" name="email" required class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                                <input type="text" id="editSoDienThoai" name="soDienThoai" minlength="10" maxlength="11" pattern="[0-9]{10,11}" placeholder="0901234567" title="Chỉ nhập số, từ 10-11 chữ số" class="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 text-sm">
+                                <small class="text-gray-500">Chỉ số, từ 10-11 chữ số (VD: 0901234567)</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end mt-6 gap-3">
+                        <button type="button" id="btnCloseEditModal" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">Hủy</button>
+                        <button type="submit" class="px-4 py-2 bg-bluemoon-600 text-white rounded-lg hover:bg-bluemoon-700 font-medium shadow-sm">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chi Tiết Hộ Khẩu -->
+    <div id="detailModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        <div class="relative mx-auto p-5 border w-full max-w-md shadow-lg rounded-xl bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-bold text-gray-900 mb-4 text-center">Chi Tiết Hộ Khẩu</h3>
+                <div id="detailContent" class="space-y-3">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                <div class="flex justify-end mt-6">
+                    <button type="button" id="btnCloseDetailModal" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Police Access Modal -->
+    <div id="policeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+            <div class="mb-6">
+                <div class="bg-red-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Truy cập Công an</h2>
+                <p class="text-gray-600 mb-6">Xác nhận truy cập dữ liệu hệ thống</p>
+                
+                <div class="text-sm text-gray-500 mb-6 bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                    Chỉ dành cho lực lượng công an có thẩm quyền
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="closePoliceModal()" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                    Hủy
+                </button>
+                <button onclick="accessPoliceData()" class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    Xác nhận truy cập
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import script theo đúng thứ tự -->
+    <script src="config.js"></script>
+    <script src="auth-utils.js"></script>
+    <script src="components/notification-v3.js"></script>
+    <script src="form-validation.js"></script>
+    <script src="hokhau.js"></script>
+    
+    <script>
+        // Police Access functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const policeBtn = document.getElementById('policeAccessBtn');
+            if (policeBtn) {
+                policeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openPoliceModal();
+                });
+            }
+        });
+
+        function openPoliceModal() {
+            const modal = document.getElementById('policeModal');
+            modal.classList.remove('hidden');
+        }
+
+        function closePoliceModal() {
+            const modal = document.getElementById('policeModal');
+            modal.classList.add('hidden');
+        }
+
+        function accessPoliceData() {
+            closePoliceModal();
+            window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('policeModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closePoliceModal();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

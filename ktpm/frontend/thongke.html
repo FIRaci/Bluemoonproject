@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMoon - Thống kê</title>
+    <link href="./dist/output.css" rel="stylesheet">
+    <link href="bluemoon-brand.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="preload.js"></script>
+</head>
+<body class="bg-gray-50 font-sans h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col shadow-sm z-10">
+        <div class="h-16 flex items-center justify-center border-b border-gray-200 bg-bluemoon-600">
+            <h1 class="text-xl font-bold text-white flex items-center">
+                <img src="./assets/logo.svg" class="h-8 w-8 mr-2" alt="BlueMoon Logo">
+                BlueMoon
+            </h1>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3">
+                <li><a href="dashboard.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                    Tổng quan
+                </a></li>
+                <li><a href="hokhau.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                    Quản lý Hộ khẩu
+                </a></li>
+                <li><a href="nhankhau.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    Quản lý Nhân khẩu
+                </a></li>
+                <li><a href="khoanthu.html" class="flex items-center px-3 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg group transition-colors">
+                    <svg class="h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Quản lý Thu phí
+                </a></li>
+                <li><a href="#" class="flex items-center px-3 py-2.5 bg-bluemoon-50 text-bluemoon-600 rounded-lg group font-medium">
+                    <svg class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    Thống kê
+                </a></li>
+
+                <!-- Police Access Button -->
+                <li>
+                    <a href="#" id="policeAccessBtn" class="flex items-center px-3 py-2.5 text-red-700 hover:bg-red-50 rounded-lg group transition-colors border-2 border-red-200">
+                        <svg class="h-5 w-5 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <span class="font-bold">Truy cập Công an</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="border-t border-gray-200 p-4">
+            <div class="flex items-center">
+                <div class="bg-bluemoon-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-semibold text-sm" id="userAvatar">A</div>
+                <div class="ml-3 flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900" id="displayUsername">Admin</p>
+                    <p class="text-xs text-gray-500">Ban quản trị</p>
+                </div>
+            </div>
+            <button id="btnLogout" class="mt-3 w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                Đăng xuất
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800">Báo cáo & Thống kê</h2>
+                <p class="text-gray-500">Theo dõi và phân tích các số liệu thu phí chung cư</p>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-6">
+
+        <!-- Bộ lọc -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-200">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Chọn đợt thu phí để xem báo cáo:</label>
+            <div class="flex gap-4">
+                <select id="selectKhoanThu" class="block w-full max-w-md border border-gray-300 rounded-lg py-2 px-3 focus:ring-bluemoon-500 focus:border-bluemoon-500 sm:text-sm">
+                    <option value="">-- Chọn khoản thu --</option>
+                </select>
+                <button onclick="viewReport()" class="bg-bluemoon-600 hover:bg-bluemoon-700 text-white px-4 py-2 rounded-lg shadow-sm transition-colors font-medium">Xem Báo Cáo</button>
+            </div>
+        </div>
+
+        <!-- Kết quả báo cáo (Ẩn mặc định) -->
+        <div id="reportResult" class="hidden space-y-6">
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                    <p class="text-sm text-blue-600 font-medium uppercase">Tổng tiền đã thu</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1" id="reportTongTien">0 ₫</h3>
+                </div>
+                <div class="bg-green-50 rounded-xl p-6 border border-green-100">
+                    <p class="text-sm text-green-600 font-medium uppercase">Số hộ đã nộp</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1" id="reportDaNop">0</h3>
+                </div>
+                <div class="bg-red-50 rounded-xl p-6 border border-red-100">
+                    <p class="text-sm text-red-600 font-medium uppercase">Số hộ chưa nộp</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mt-1" id="reportChuaNop">0</h3>
+                </div>
+            </div>
+
+            <!-- Chart & List -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Biểu đồ tròn -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <h3 class="font-bold text-gray-800 mb-4 text-center">Tỷ lệ hoàn thành</h3>
+                    <div class="h-64 relative">
+                        <canvas id="completionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Danh sách chi tiết -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 lg:col-span-2 flex flex-col h-[400px]">
+                    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="font-bold text-gray-800">Danh sách đã nộp tiền</h3>
+                        <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Mới nhất lên đầu</span>
+                    </div>
+                    <div class="overflow-y-auto flex-1 p-0">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 sticky top-0">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hộ Khẩu</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chủ Hộ</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Số tiền</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày nộp</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="reportTableBody">
+                                <!-- Data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danh sách chưa nộp (với highlight đỏ nếu quá hạn) -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 mt-6 flex flex-col max-h-[400px]">
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="font-bold text-gray-800">Danh sách chưa nộp tiền</h3>
+                    <span class="text-xs text-red-500 bg-red-50 px-2 py-1 rounded-full">Quá hạn sẽ bôi đỏ</span>
+                </div>
+                <div class="overflow-y-auto flex-1 p-0">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hộ Khẩu</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chủ Hộ</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="unpaidTableBody">
+                            <tr><td colspan="3" class="px-6 py-4 text-center text-gray-400">Chọn khoản thu để xem</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <!-- Police Access Modal -->
+    <div id="policeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+            <div class="mb-6">
+                <div class="bg-red-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Truy cập Công an</h2>
+                <p class="text-gray-600 mb-6">Xác nhận truy cập dữ liệu hệ thống</p>
+                
+                <div class="text-sm text-gray-500 mb-6 bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                    Chỉ dành cho lực lượng công an có thẩm quyền
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="closePoliceModal()" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                    Hủy
+                </button>
+                <button onclick="accessPoliceData()" class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    Xác nhận truy cập
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="auth-utils.js"></script>
+    <script src="components/notification-v3.js"></script>
+    <script src="thongke.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const policeBtn = document.getElementById('policeAccessBtn');
+            if (policeBtn) {
+                policeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('policeModal').classList.remove('hidden');
+                });
+            }
+        });
+
+        function closePoliceModal() {
+            document.getElementById('policeModal').classList.add('hidden');
+        }
+
+        function accessPoliceData() {
+            closePoliceModal();
+            window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+        }
+
+        document.getElementById('policeModal').addEventListener('click', function(e) {
+            if (e.target === this) closePoliceModal();
+        });
+    </script>
+</body>
+</html>

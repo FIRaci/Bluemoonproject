@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    /* Base Options */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "esnext",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "ignoreDeprecations": "6.0",
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+
+    /* Libs */
+    "lib": ["esnext"],
+
+    /* Module */
+    "module": "esnext",
+    "moduleResolution": "bundler",
+
+    /* Paths */
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+
+    /* Types */
+    "types": ["bun-types", "node"]
+  },
+  "include": ["src", "prisma/seed.ts"],
+  "exclude": ["node_modules"]
+}

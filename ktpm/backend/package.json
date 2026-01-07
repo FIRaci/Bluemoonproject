@@ -1,0 +1,37 @@
+{
+  "name": "quan-ly-chung-cu-backend",
+  "version": "1.0.0",
+  "description": "Backend API cho Hệ thống Quản lý Chung cư BlueMoon",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "start:node": "node --loader ts-node/esm src/index.ts",
+    "db:migrate": "bunx prisma migrate dev",
+    "db:migrate:deploy": "bunx prisma migrate deploy",
+    "db:studio": "bunx prisma studio",
+    "db:seed": "bun run prisma/seed.ts",
+    "db:optimize": "bunx prisma migrate dev --name optimize_schema"
+  },
+  "prisma": {
+    "seed": "bun run prisma/seed.ts"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/jwt": "^1.0.2",
+    "@elysiajs/swagger": "^1.0.5",
+    "@prisma/client": "^5.17.0",
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
+    "elysia": "latest",
+    "exceljs": "^4.4.0",
+    "module-alias": "^2.2.3",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "bun-types": "latest",
+    "prisma": "5.17.0",
+    "ts-node": "^10.9.2"
+  }
+}

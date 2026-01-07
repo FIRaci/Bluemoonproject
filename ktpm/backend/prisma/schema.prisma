@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  hoKhauId  String?
+  role      Role     @default(RESIDENT)
+  hoKhau    HoKhau?  @relation(fields: [hoKhauId], references: [id], onDelete: SetNull)
+
+  @@index([hoKhauId])
+  @@index([role])
+  @@index([username])
+}
+
+model HoKhau {
+  id            String          @id @default(cuid())
+  soCanHo       String          @unique
+  tenChuHo      String
+  soDienThoai   String?
+  dienTich      Float?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  hangCanHo     HangCanHo       @default(BINH_THUONG)
+  ownerCccd     String?
+  ownerEmail    String?
+  ownerGioiTinh String?
+  ownerNgaySinh DateTime?
+  nhanKhaus     NhanKhau[]
+  lichSuNopTien LichSuNopTien[]
+  chiTietSuDung ChiTietSuDung[]
+  users         User[]
+
+  @@index([tenChuHo])
+  @@index([hangCanHo])
+  @@index([ownerCccd])
+}
+
+model NhanKhau {
+  id             String    @id @default(cuid())
+  hoTen          String
+  cccd           String?   @unique
+  ngaySinh       DateTime?
+  gioiTinh       String?
+  quanHeVoiChuHo String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  hoKhauId       String
+  email          String?
+  hoKhau         HoKhau    @relation(fields: [hoKhauId], references: [id], onDelete: Cascade)
+
+  @@index([hoKhauId])
+  @@index([hoTen])
+  @@index([quanHeVoiChuHo])
+}
+
+model KhoanThu {
+  id            String          @id @default(cuid())
+  tenKhoanThu   String
+  moTa          String?
+  loaiPhi       LoaiPhi         @default(BAT_BUOC)
+  soTien        Float?
+  hanNop        DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  donGiaDichVu  Float?
+  donViTinh     String?
+  nhaCungCap    String?
+  phanLoaiPhi   PhanLoaiPhi     @default(CO_DINH)
+  phiCoDinh     Float?
+  
+  // Phạm vi áp dụng
+  phamViApDung  String?         // TAT_CA, THEO_TOA, THEO_TANG, THEO_PHONG, HANG_CAN_HO
+  ghiChuPhamVi  String?         // Ghi chú chi tiết phạm vi
+  toa           String?         // A, B, C
+  tang          String?         // Số tầng hoặc range: "5", "5-10"
+  phong         String?         // Số phòng
+  loaiDichVu    String?         // DIEN, NUOC, MANG, GAS, KHAC
+  ghiChuGia     String?         // Ghi chú về giá
+  
+  lichSuNopTien LichSuNopTien[]
+  chiTietSuDung ChiTietSuDung[]
+
+  @@index([loaiPhi])
+  @@index([phanLoaiPhi])
+  @@index([hanNop])
+  @@index([phamViApDung])
+}
+
+model ChiTietSuDung {
+  id            String   @id @default(cuid())
+  hoKhauId      String
+  khoanThuId    String
+  chiSoCu       Float?
+  chiSoMoi      Float
+  soLuongSuDung Float
+  thanhTien     Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  hoKhau        HoKhau   @relation(fields: [hoKhauId], references: [id], onDelete: Cascade)
+  khoanThu      KhoanThu @relation(fields: [khoanThuId], references: [id], onDelete: Cascade)
+
+  @@unique([hoKhauId, khoanThuId])
+  @@index([hoKhauId])
+  @@index([khoanThuId])
+}
+
+model LichSuNopTien {
+  id          String   @id @default(cuid())
+  soTienDaNop Float
+  ngayNop     DateTime @default(now())
+  nguoiNop    String?
+  ghiChu      String?
+  hoKhauId    String
+  khoanThuId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  hoKhau      HoKhau   @relation(fields: [hoKhauId], references: [id], onDelete: Cascade)
+  khoanThu    KhoanThu @relation(fields: [khoanThuId], references: [id], onDelete: Cascade)
+
+  @@index([hoKhauId])
+  @@index([khoanThuId])
+  @@index([ngayNop])
+  @@index([hoKhauId, khoanThuId])
+}
+
+enum LoaiPhi {
+  BAT_BUOC
+  TU_NGUYEN
+}
+
+enum PhanLoaiPhi {
+  CO_DINH
+  THEO_MUC_SU_DUNG
+}
+
+enum Role {
+  ADMIN
+  RESIDENT
+}
+
+enum HangCanHo {
+  BINH_THUONG
+  TRUNG_CAP
+  CAO_CAP
+  PENTHOUSE
+}

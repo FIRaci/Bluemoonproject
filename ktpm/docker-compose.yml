@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Service 1: Database PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: bluemoon-postgres
+    environment:
+      POSTGRES_USER: bluemoon
+      POSTGRES_PASSWORD: bluemoon2025
+      POSTGRES_DB: bluemoon_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bluemoon"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Service 2: Backend API
+  api:
+    build: ./backend
+    container_name: bluemoon-api
+    environment:
+      DATABASE_URL: "postgresql://bluemoon:bluemoon2025@postgres:5432/bluemoon_db?schema=public"
+      JWT_SECRET: "bluemoon-secret-key-2025-very-secure"
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  postgres_data:

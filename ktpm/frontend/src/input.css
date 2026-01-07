@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tùy chỉnh thêm nếu cần */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-app-region: drag;
+}
+
+button, input, a {
+  -webkit-app-region: no-drag;
+}

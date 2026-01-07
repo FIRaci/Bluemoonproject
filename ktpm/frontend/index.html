@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMoon Manager - Đăng nhập</title>
+    <!-- Link đến file CSS đã được Tailwind build ra -->
+    <link href="./dist/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center overflow-hidden">
+
+    <!-- Loading spinner khi đang kiểm tra token -->
+    <div id="authLoading" class="fixed inset-0 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-bluemoon-500 rounded-full mx-auto flex items-center justify-center mb-6 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </div>
+            <div class="mb-3">
+                <h2 class="text-xl font-bold text-bluemoon-600 mb-2">BlueMoon</h2>
+                <p class="text-gray-600 font-medium">Đang kiểm tra phiên đăng nhập...</p>
+            </div>
+            <div class="w-32 h-1 bg-gray-200 rounded-full mx-auto overflow-hidden">
+                <div class="h-full bg-bluemoon-500 rounded-full animate-pulse" style="width: 60%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginContainer" class="bg-white p-8 rounded-2xl shadow-2xl w-96 border border-gray-200 relative z-10" style="display: none;">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="w-20 h-20 bg-bluemoon-500 rounded-full mx-auto flex items-center justify-center mb-4 shadow-lg text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">BlueMoon</h1>
+            <p class="text-sm text-gray-500 mt-1">Hệ thống Quản lý Chung cư</p>
+        </div>
+
+        <!-- Form -->
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="text" id="username" name="username" required 
+                        class="pl-10 block w-full border-gray-300 rounded-lg focus:ring-bluemoon-500 focus:border-bluemoon-500 shadow-sm sm:text-sm py-2 border transition duration-200 ease-in-out" 
+                        placeholder="admin">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="password" id="password" name="password" required 
+                        class="pl-10 block w-full border-gray-300 rounded-lg focus:ring-bluemoon-500 focus:border-bluemoon-500 shadow-sm sm:text-sm py-2 border transition duration-200 ease-in-out" 
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <!-- Thông báo lỗi -->
+            <div id="errorMessage" class="hidden bg-red-50 text-red-600 text-sm p-3 rounded-lg flex items-center">
+                <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span id="errorText">Sai thông tin đăng nhập</span>
+            </div>
+
+            <button type="submit" id="btnLogin"
+                class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-bluemoon-600 hover:bg-bluemoon-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bluemoon-500 transition duration-300 transform hover:scale-[1.02]">
+                Đăng nhập
+                <svg id="loadingIcon" class="hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </button>
+        </form>
+        
+        <!-- Links -->
+        <div class="mt-6 text-center space-y-3">
+            <p class="text-sm text-gray-600">
+                <a href="#" id="forgotPasswordLink" class="text-bluemoon-600 hover:text-bluemoon-700 font-semibold transition-colors">
+                    Quên mật khẩu?
+                </a>
+            </p>
+            <p class="text-sm text-gray-600">
+                Chưa có tài khoản? 
+                <a href="register.html" class="text-bluemoon-600 hover:text-bluemoon-700 font-semibold transition-colors">
+                    Đăng ký ngay
+                </a>
+            </p>
+        </div>
+        
+        <div class="mt-4 text-center text-xs text-gray-500">
+            <p>Cư dân có thể đăng ký tài khoản bằng mã căn hộ</p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 border border-gray-200">
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-orange-500 rounded-full mx-auto flex items-center justify-center mb-4 shadow-lg text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-6 6c-3 0-6 1-6 4a1 1 0 01-1 1H9a1 1 0 01-1-1c0-3-3-4-6-4a6 6 0 010-12 2 2 0 012-2h8a2 2 0 012 2v1" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800">Quên mật khẩu</h2>
+                <p class="text-sm text-gray-500 mt-1">Nhập thông tin để lấy lại mật khẩu</p>
+            </div>
+
+            <!-- Form -->
+            <form id="forgotPasswordForm" class="space-y-6">
+                <div>
+                    <label for="apartmentCode" class="block text-sm font-medium text-gray-700 mb-1">Số căn hộ</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input type="text" id="apartmentCode" name="apartmentCode" required 
+                            class="pl-10 block w-full border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 shadow-sm sm:text-sm py-2 border transition duration-200 ease-in-out" 
+                            placeholder="BM-A1201">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="cccd" class="block text-sm font-medium text-gray-700 mb-1">CCCD/CMND</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm3 5a2 2 0 114 0v1h1a1 1 0 010 2H6a1 1 0 010-2h1V7z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input type="text" id="cccd" name="cccd" required 
+                            class="pl-10 block w-full border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 shadow-sm sm:text-sm py-2 border transition duration-200 ease-in-out" 
+                            placeholder="001234567890">
+                    </div>
+                </div>
+
+                <!-- Thông báo -->
+                <div id="forgotPasswordMessage" class="hidden p-3 rounded-lg flex items-center">
+                    <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span id="forgotPasswordText"></span>
+                </div>
+
+                <div class="flex space-x-3">
+                    <button type="button" id="cancelForgotPassword"
+                        class="flex-1 py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-200">
+                        Hủy
+                    </button>
+                    <button type="submit" id="submitForgotPassword"
+                        class="flex-1 flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-200">
+                        Lấy lại
+                        <svg id="forgotPasswordLoading" class="hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hình nền trang trí -->
+    <div class="absolute top-0 left-0 w-full h-full -z-0 opacity-10 pointer-events-none">
+         <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-bluemoon-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+         <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- Config -->
+    <script src="./config.js"></script>
+    <!-- Auth utilities -->
+    <script src="./auth-utils.js"></script>
+    <!-- Main application logic -->
+    <script src="./renderer.js"></script>
+</body>
+</html>

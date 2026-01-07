@@ -1,0 +1,59 @@
+{
+  "name": "quan-ly-chung-cu-frontend",
+  "version": "1.0.0",
+  "description": "Ứng dụng Desktop Quản lý Chung cư BlueMoon",
+  "main": "main.js",
+  "scripts": {
+    "start": "npm run build:css && electron .",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "dist": "npm run build:css && set CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder",
+    "dist:win": "npm run build:css && set CSC_IDENTITY_AUTO_DISCOVERY=false && electron-builder --win"
+  },
+  "keywords": [
+    "electron",
+    "management",
+    "bluemoon"
+  ],
+  "author": "Dev Team",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3",
+    "tailwindcss": "^3.4.18"
+  },
+  "build": {
+    "appId": "com.bluemoon.manager",
+    "productName": "BlueMoon Manager",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "node_modules/electron/**/*"
+    ],
+    "win": {
+      "icon": "assets/icons/app-icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "BlueMoon Manager"
+    },
+    "portable": {
+      "artifactName": "BlueMoon-Manager-Portable-${version}.exe"
+    }
+  }
+}

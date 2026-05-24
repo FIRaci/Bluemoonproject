@@ -8,6 +8,13 @@ import {
   khoanThuDto,
   nopTienDto,
   updateKhoanThu,
+  nhapChiTietSuDung,
+  getChiTietSuDung,
+  importChiTietSuDung,
+  tinhTongTienPhaiThu,
+  getUsageByKhoanThu,
+  saveBulkUsage,
+  getExportTemplate,
 } from "@/services/khoanthu.service";
 import { authMiddleware, adminMiddleware } from "@/middleware/auth.middleware";
 
@@ -104,7 +111,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 7. Nhập số điện/nước cho 1 hộ
   .post("/chi-tiet-su-dung", async ({ body, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => m.nhapChiTietSuDung(body));
+      const result = await nhapChiTietSuDung(body);
       return { status: "success", data: result };
     } catch (e: any) {
       set.status = 400;
@@ -122,7 +129,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
 
   // 8. Lấy danh sách chi tiết sử dụng theo khoản thu
   .get("/chi-tiet-su-dung/:khoanThuId", async ({ params: { khoanThuId } }) => {
-    const list = await import("@/services/khoanthu.service").then(m => m.getChiTietSuDung(khoanThuId));
+    const list = await getChiTietSuDung(khoanThuId);
     return { status: "success", data: list };
   }, {
     detail: { tags: ["SuDung"], summary: "Xem chi tiết sử dụng theo khoản thu" }
@@ -131,9 +138,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 9. Import hàng loạt từ Excel
   .post("/import-su-dung/:khoanThuId", async ({ params: { khoanThuId }, body, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => 
-        m.importChiTietSuDung(khoanThuId, body)
-      );
+      const result = await importChiTietSuDung(khoanThuId, body);
       return { status: "success", data: result };
     } catch (e: any) {
       set.status = 400;
@@ -151,9 +156,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 10. Tính tổng tiền phải thu cho 1 hộ
   .get("/tinh-tien/:hoKhauId", async ({ params: { hoKhauId }, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => 
-        m.tinhTongTienPhaiThu(hoKhauId)
-      );
+      const result = await tinhTongTienPhaiThu(hoKhauId);
       return { status: "success", data: result };
     } catch (e: any) {
       set.status = 400;
@@ -166,9 +169,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 11. Lấy chi tiết sử dụng điện/nước theo khoản thu
   .get("/:id/usage", async ({ params: { id }, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => 
-        m.getUsageByKhoanThu(id)
-      );
+      const result = await getUsageByKhoanThu(id);
       return { status: "success", data: result };
     } catch (e: any) {
       set.status = 400;
@@ -181,9 +182,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 12. Nhập hàng loạt chỉ số điện/nước (hỗ trợ cả nhập trực tiếp số tiền)
   .post("/:id/bulk-usage", async ({ params: { id }, body, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => 
-        m.saveBulkUsage(id, body)
-      );
+      const result = await saveBulkUsage(id, body);
       return { status: "success", data: result, message: "Lưu thành công" };
     } catch (e: any) {
       set.status = 400;
@@ -205,9 +204,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 13. Export template Excel cho nhập liệu (kèm số cũ từ kỳ trước)
   .get("/:id/export-template", async ({ params: { id }, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => 
-        m.getExportTemplate(id)
-      );
+      const result = await getExportTemplate(id);
       return { status: "success", data: result };
     } catch (e: any) {
       set.status = 400;
@@ -220,9 +217,7 @@ export const khoanThuRoutes = new Elysia({ prefix: "/khoanthu" })
   // 14. Import từ Excel/CSV (parse và lưu)
   .post("/:id/import-usage", async ({ params: { id }, body, set }) => {
     try {
-      const result = await import("@/services/khoanthu.service").then(m => 
-        m.importChiTietSuDung(id, body)
-      );
+      const result = await importChiTietSuDung(id, body);
       return { status: "success", data: result, message: `Import thành công ${result.success} hộ` };
     } catch (e: any) {
       set.status = 400;

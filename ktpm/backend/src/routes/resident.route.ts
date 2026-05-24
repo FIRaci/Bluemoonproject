@@ -2,7 +2,10 @@ import { Elysia, t } from "elysia";
 import { db } from "@/utils/db";
 import { jwt } from "@elysiajs/jwt";
 
-const JWT_SECRET = process.env.JWT_SECRET || "bluemoon-secret-key-2025-very-secure";
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('CRITICAL: JWT_SECRET environment variable is not set!');
+}
 
 export const residentRoutes = new Elysia({ prefix: "/resident" })
   .use(jwt({ name: "jwt", secret: JWT_SECRET }))
@@ -287,8 +290,11 @@ export const residentRoutes = new Elysia({ prefix: "/resident" })
       // Tạo mã giao dịch unique
       const transactionId = `${userInfo.hoKhau?.soCanHo}-${Date.now()}`;
 
-      // QR Code content - Rickroll URL 😄
-      const qrContent = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+      // QR Code content - VietQR payment URL
+      // Format: Số tài khoản BQL chung cư, số tiền, nội dung chuyển khoản
+      const bankAccount = process.env.BANK_ACCOUNT || 'BLUEMOON_MGMT';
+      const bankCode = process.env.BANK_CODE || 'MB';
+      const qrContent = `https://img.vietqr.io/image/${bankCode}-${bankAccount}-compact2.png?amount=${tongTien}&addInfo=${encodeURIComponent(transactionId)}&accountName=BQL+Chung+Cu+BlueMoon`;
 
       return {
         status: "success",

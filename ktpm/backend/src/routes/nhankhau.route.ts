@@ -42,7 +42,7 @@ export const nhanKhauRoutes = new Elysia({ prefix: "/nhankhau" })
       return { status: "success", data: updated };
     } catch (e: any) {
       set.status = 400;
-      return { status: "error", message: "Lỗi khi cập nhật nhân khẩu" };
+      return { status: "error", message: e.message || "Lỗi khi cập nhật nhân khẩu" };
     }
   }, {
     isAdmin: true,
@@ -57,7 +57,7 @@ export const nhanKhauRoutes = new Elysia({ prefix: "/nhankhau" })
       return { status: "success", message: "Đã xóa nhân khẩu" };
     } catch (e: any) {
       set.status = 400;
-      return { status: "error", message: "Không thể xóa nhân khẩu" };
+      return { status: "error", message: e.message || "Không thể xóa nhân khẩu" };
     }
   }, {
     isAdmin: true,

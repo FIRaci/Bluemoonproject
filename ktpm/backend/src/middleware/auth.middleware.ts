@@ -12,11 +12,9 @@ export type AuthUser = {
 // JWT Secret - MUST be set via environment variable
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
-  console.error('❌ CRITICAL: JWT_SECRET environment variable is not set!');
-  // In production, this should throw. For dev, use a warning.
-  // throw new Error('JWT_SECRET environment variable is required');
+  throw new Error('CRITICAL: JWT_SECRET environment variable is not set! Please configure it in .env file.');
 }
-const ACTUAL_JWT_SECRET = JWT_SECRET || 'dev-only-secret-change-in-production';
+const ACTUAL_JWT_SECRET = JWT_SECRET;
 
 // JWT Middleware - Base authentication
 export const authMiddleware = new Elysia({ name: "auth" })

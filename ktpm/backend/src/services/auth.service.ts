@@ -164,40 +164,13 @@ export async function changePassword(userId: string, currentPassword: string, ne
   
   let isCurrentPasswordValid = false;
   
-  // Try multiple verification methods
+  // Verify using secure hash comparison only
   try {
-    // Method 1: Hash verification (bcrypt/argon2)
-    if (user.password.startsWith('$2') || user.password.startsWith('$argon2')) {
-      isCurrentPasswordValid = await Bun.password.verify(currentPassword, user.password);
-      console.log('🔐 Hash verification result:', isCurrentPasswordValid);
-    }
-    
-    // Method 2: Plain text comparison (fallback for fresh reset passwords)
-    if (!isCurrentPasswordValid && user.password === currentPassword) {
-      isCurrentPasswordValid = true;
-      console.log('📝 Plain text match! Converting to hash...');
-      // Convert to proper hash
-      const hashedPassword = await Bun.password.hash(currentPassword);
-      await db.user.update({
-        where: { id: userId },
-        data: { password: hashedPassword }
-      });
-      console.log('✅ Password converted to hash format');
-    }
-    
-    // Method 3: If DB has hash but verification failed, log detailed info
-    if (!isCurrentPasswordValid) {
-      console.log('⚠️ All verification methods failed');
-      console.log('📋 Password length in DB:', user.password.length);
-      console.log('📋 Current password length:', currentPassword.length);
-    }
+    isCurrentPasswordValid = await Bun.password.verify(currentPassword, user.password);
+    console.log('🔐 Hash verification result:', isCurrentPasswordValid);
   } catch (verifyError) {
     console.error('❌ Password verification error:', verifyError);
-    // Last resort: plain text comparison
-    if (user.password === currentPassword) {
-      isCurrentPasswordValid = true;
-      console.log('📝 Fallback plain text match succeeded');
-    }
+    isCurrentPasswordValid = false;
   }
   
   if (!isCurrentPasswordValid) {
@@ -309,16 +282,4 @@ function generateEasyPassword(): string {
   
   return word + number;
 }
-
-/**
- * Hàm tạo mật khẩu ngẫu nhiên (backup)
- * @returns {string} - Mật khẩu ngẫu nhiên 6 ký tự
- */
-function generateRandomPassword(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
-  let password = '';
-  for (let i = 0; i < 6; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return password;
-}
+
